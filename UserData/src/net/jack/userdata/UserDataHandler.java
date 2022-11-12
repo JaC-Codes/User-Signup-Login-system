@@ -136,13 +136,13 @@ public class UserDataHandler {
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("jack@jaccodes.co.uk", "Md5hashyouravy46632822");
+                return new PasswordAuthentication("", "");
             }
         });
 
         try {
             MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("jack@jaccodes.co.uk"));
+            message.setFrom(new InternetAddress(""));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(personalEmail));
             message.setSubject("Welcome to JaC Codes");
             message.setText("Hello, " + userName + "\nYour identification number is " + userID + "\nYour company email address is " + userEmail +
