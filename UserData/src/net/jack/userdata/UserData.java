@@ -1,6 +1,7 @@
 package net.jack.userdata;
 
 import net.jack.userdata.database.Database;
+import net.jack.userdata.gui.GUI;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -20,11 +21,16 @@ public class UserData {
         }
 
         UserDataHandler dataHandler = new UserDataHandler();
-        System.out.println("Have you already registered? ");
+        int registered = JOptionPane.showConfirmDialog(null, "Are you already registered?", "JaCCodes", JOptionPane.YES_NO_CANCEL_OPTION);
         Scanner scan = new Scanner(System.in);
-        if (scan.nextLine().equalsIgnoreCase("yes")) {
-            System.out.println("All details have been emailed to you.");
 
+        if (registered == 2) {
+            System.exit(0);
+        }
+        if (registered == -1 ) {
+            System.exit(0);
+        }
+        if (registered == 0) {
             dataHandler.checkId(scan, database);
             dataHandler.checkEmail(scan, database);
             dataHandler.checkPassword(scan, database);
@@ -38,9 +44,12 @@ public class UserData {
             dataHandler.setAge(userAge);
             String userID = dataHandler.getRandomNumber();
             String userPassword = dataHandler.generatePassword();
-            String userEmail = dataHandler.getUserEmail();
-            System.out.println("Okay " + dataHandler.getName() + " we are creating you a user I.D as we speak.");
+            String userEmail = dataHandler.getUserEmail(userID);
+            JOptionPane.showMessageDialog(null, "Okay " + dataHandler.getName() + " we are setting up your account now.", "JaCCodes", JOptionPane.PLAIN_MESSAGE);
             dataHandler.sendEmail(userName, userID, userEmail, userPassword);
+            GUI gui = new GUI();
+            gui.sendEmailGUI();
+
 
             PreparedStatement ps = database.getConnection().prepareStatement("INSERT INTO users VALUES(?, ?, ?, ?, ?, ?);");
             ps.setString(1, userID);
