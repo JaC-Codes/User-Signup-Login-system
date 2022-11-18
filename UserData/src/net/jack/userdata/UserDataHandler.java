@@ -51,8 +51,8 @@ public class UserDataHandler {
         return String.format("%06d", number);
     }
 
-    public String getUserEmail() {
-        return name + "@JaCCodes.co.uk";
+    public String getUserEmail(String userID) {
+        return name + "." + userID  +  "@JaCCodes.co.uk";
     }
 
     public String generatePassword() {
